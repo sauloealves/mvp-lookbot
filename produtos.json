@@ -1,0 +1,92 @@
+[
+    {
+      "id": 1,
+      "nome": "Vestido Floral Verão",
+      "preco": 149.90,
+      "imagens": [
+        "https://i.imgur.com/Exemplo1.jpg",
+        "https://i.imgur.com/Exemplo2.jpg"
+      ]
+    },
+    {
+      "id": 2,
+      "nome": "Camisa Social Slim",
+      "preco": 99.90,
+      "imagens": [
+        "https://i.imgur.com/Exemplo3.jpg",
+        "https://i.imgur.com/Exemplo4.jpg"
+      ]
+    },  
+    {
+        "id": 3,
+        "nome": "Tênis Esportivo Confortável",
+        "preco": 199.90,
+        "imagens": [
+            "https://i.imgur.com/Exemplo5.jpg",
+            "https://i.imgur.com/Exemplo6.jpg"
+        ]
+    },
+    {
+        "id": 4,
+        "nome": "Jaqueta de Couro Masculina",
+        "preco": 299.90,
+        "imagens": [
+            "https://i.imgur.com/Exemplo7.jpg",
+            "https://i.imgur.com/Exemplo8.jpg"
+        ]
+    },
+    {
+        "id": 5,
+        "nome": "Relógio de Pulso Clássico",
+        "preco": 249.90,
+        "imagens": [
+            "https://i.imgur.com/Exemplo9.jpg",
+            "https://i.imgur.com/Exemplo10.jpg"
+        ]
+    },
+    {
+        "id": 6,
+        "nome": "Bolsa Feminina Elegante",
+        "preco": 189.90,
+        "imagens": [
+            "https://i.imgur.com/Exemplo11.jpg",
+            "https://i.imgur.com/Exemplo12.jpg"
+        ]
+    },
+    {
+        "id": 7,
+        "nome": "Óculos de Sol Moderno",
+        "preco": 129.90,
+        "imagens": [
+            "https://i.imgur.com/Exemplo13.jpg",
+            "https://i.imgur.com/Exemplo14.jpg"
+        ]
+    },
+    {
+        "id": 8,
+        "nome": "Calça Jeans Skinny",
+        "preco": 159.90,
+        "imagens": [
+            "https://i.imgur.com/Exemplo15.jpg",
+            "https://i.imgur.com/Exemplo16.jpg"
+        ]
+    },
+    {
+        "id": 9,
+        "nome": "Blusa de Tricô Feminina",
+        "preco": 119.90,
+        "imagens": [
+            "https://i.imgur.com/Exemplo17.jpg",
+            "https://i.imgur.com/Exemplo18.jpg"
+        ]
+    },
+    {
+        "id": 10,
+        "nome": "Sapato Social Masculino",
+        "preco": 249.90,
+        "imagens": [
+            "https://i.imgur.com/Exemplo19.jpg",
+            "https://i.imgur.com/Exemplo20.jpg"
+        ]
+    }
+]

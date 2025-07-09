@@ -1,0 +1,3 @@
+ImgBB - armazena imagens
+Twilio - comunicação whatsapp
+ngrok - bridge localhost

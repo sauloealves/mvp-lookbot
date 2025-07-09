@@ -1,0 +1,66 @@
+{
+  "whatsapp:+5516992815845": [
+    {
+      "data": "30/05/2025",
+      "total": 449.8,
+      "itens": [
+        {
+          "descricao_curta": "Mulher vestindo saia longa azul com babados e blusa branca amarrada na cintura",
+          "cores_predominantes": [
+            "azul",
+            "branco"
+          ],
+          "tom_de_pele_recomendado": "neutro",
+          "estilo": "casual",
+          "url": "https://i.ibb.co/dw4jdwJS/look1.jpg",
+          "valor": "219.90"
+        },
+        {
+          "descricao_curta": "Conjunto casual feminino composto por uma blusa sem mangas preta e uma saia de cintura alta com listras diagonais pretas e brancas.",
+          "cores_predominantes": [
+            "preto",
+            "branco"
+          ],
+          "tom_de_pele_recomendado": "neutro",
+          "estilo": "casual",
+          "url": "https://i.ibb.co/whnZqy6Q/look2.jpg",
+          "valor": "229.90"
+        }
+      ]
+    },
+    {
+      "data": "30/05/2025",
+      "total": 209.9,
+      "itens": [
+        {
+          "descricao_curta": "Mulher vestindo uma camiseta branca de banda e saia curta estampada.",
+          "cores_predominantes": [
+            "branco",
+            "marrom",
+            "preto"
+          ],
+          "tom_de_pele_recomendado": "neutro",
+          "estilo": "casual",
+          "url": "https://i.ibb.co/4wjPZcJf/look3.jpg",
+          "valor": "209.90"
+        }
+      ]
+    },
+    {
+      "data": "30/05/2025",
+      "total": 169.9,
+      "itens": [
+        {
+          "descricao_curta": "Vestido longo lilás com alças finas e cintura marcada",
+          "cores_predominantes": [
+            "lilás"
+          ],
+          "tom_de_pele_recomendado": "neutro",
+          "estilo": "festa",
+          "url": "https://i.ibb.co/7NZ7y8h5/vestido3.jpg",
+          "valor": "169.90"
+        }
+      ]
+    }
+  ]
+}

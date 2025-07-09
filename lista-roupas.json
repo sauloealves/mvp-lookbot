@@ -1,0 +1,88 @@
+[
+  {
+    "descricao_curta": "Vestido longo verde esmeralda com decote em V e fenda lateral alta",
+    "cores_predominantes": [
+      "verde esmeralda"
+    ],
+    "tom_de_pele_recomendado": "neutro",
+    "estilo": "festa",
+    "url": "https://i.ibb.co/35PMmpRM/vestido5.jpg"
+  },
+  {
+    "descricao_curta": "Vestido longo azul marinho com mangas curtas de renda e detalhes brilhantes.",
+    "cores_predominantes": [
+      "azul marinho"
+    ],
+    "tom_de_pele_recomendado": "neutro",
+    "estilo": "festa",
+    "url": "https://i.ibb.co/gM1YHF3N/vestido4.jpg"
+  },
+  {
+    "descricao_curta": "Vestido longo lilás com alças finas e cintura marcada",
+    "cores_predominantes": [
+      "lilás"
+    ],
+    "tom_de_pele_recomendado": "neutro",
+    "estilo": "festa",
+    "url": "https://i.ibb.co/7NZ7y8h5/vestido3.jpg"
+  },
+  {
+    "descricao_curta": "Vestido longo vermelho, sem alças, com detalhes bordados no busto e fenda lateral.",
+    "cores_predominantes": [
+      "vermelho"
+    ],
+    "tom_de_pele_recomendado": "neutro",
+    "estilo": "festa",
+    "url": "https://i.ibb.co/Kcqyccq7/vestido2.jpg"
+  },
+  {
+    "descricao_curta": "Vestido longo de festa, verde esmeralda, com fenda lateral alta e ombro único.",
+    "cores_predominantes": [
+      "verde esmeralda"
+    ],
+    "tom_de_pele_recomendado": "neutro",
+    "estilo": "festa",
+    "url": "https://i.ibb.co/B27j07PJ/vestido1.jpg"
+  },
+  {
+    "descricao_curta": "Blusa de manga longa cor terracota com calça social branca",
+    "cores_predominantes": [
+      "terracota",
+      "branco"
+    ],
+    "tom_de_pele_recomendado": "neutro",
+    "estilo": "social",
+    "url": "https://i.ibb.co/MkBT7ryJ/look4.jpg"
+  },
+  {
+    "descricao_curta": "Mulher vestindo uma camiseta branca de banda e saia curta estampada.",
+    "cores_predominantes": [
+      "branco",
+      "marrom",
+      "preto"
+    ],
+    "tom_de_pele_recomendado": "neutro",
+    "estilo": "casual",
+    "url": "https://i.ibb.co/4wjPZcJf/look3.jpg"
+  },
+  {
+    "descricao_curta": "Mulher vestindo saia longa azul com babados e blusa branca amarrada na cintura",
+    "cores_predominantes": [
+      "azul",
+      "branco"
+    ],
+    "tom_de_pele_recomendado": "neutro",
+    "estilo": "casual",
+    "url": "https://i.ibb.co/dw4jdwJS/look1.jpg"
+  },
+  {
+    "descricao_curta": "Conjunto casual feminino composto por uma blusa sem mangas preta e uma saia de cintura alta com listras diagonais pretas e brancas.",
+    "cores_predominantes": [
+      "preto",
+      "branco"
+    ],
+    "tom_de_pele_recomendado": "neutro",
+    "estilo": "casual",
+    "url": "https://i.ibb.co/whnZqy6Q/look2.jpg"
+  }
+]
