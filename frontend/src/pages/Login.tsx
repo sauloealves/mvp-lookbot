@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -20,12 +23,18 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow-md w-80">
-        <h2 className="text-2xl mb-4 text-center">Login</h2>
-        <input className="w-full mb-2 p-2 border" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input className="w-full mb-4 p-2 border" type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
-        <button className="w-full bg-blue-500 text-white py-2 rounded" type="submit">Entrar</button>
-      </form>
+      <Card className="w-[380px]">
+        <CardHeader>
+          <CardTitle className="text-center">Entrar</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <Input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required />
+            <Input type="password" placeholder="Senha" value={senha} onChange={e => setSenha(e.target.value)} required />
+            <Button className="w-full" type="submit">Login</Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

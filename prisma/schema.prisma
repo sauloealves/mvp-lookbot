@@ -18,6 +18,7 @@ model Loja {
   id        String     @id @default(uuid())
   nome      String
   ativo     Boolean    @default(true)
+  logo_url  String?
   usuarios  Usuario[]
   roupas    Roupa[]
   clientes  Cliente[]
