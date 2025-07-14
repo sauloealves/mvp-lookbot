@@ -14,7 +14,11 @@ export default function Login() {
     e.preventDefault();
     try {
       const { data } = await api.post('/auth/login', { email, senha });
+      
       localStorage.setItem('token', data.token);
+      localStorage.setItem('loja_logo', data.loja_logo);
+      localStorage.setItem('loja_nome', data.loja_nome);
+
       navigate('/');
     } catch (err) {
       alert('Erro no login');
