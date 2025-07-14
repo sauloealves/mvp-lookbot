@@ -21,7 +21,7 @@ export default function Login() {
 
       navigate('/');
     } catch (err) {
-      alert('Erro no login');
+      alert(`${err.response.data.erro}`);
     }
   };
 
