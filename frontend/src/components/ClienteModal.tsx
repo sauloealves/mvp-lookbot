@@ -1,24 +1,44 @@
-import { useState, forwardRef } from 'react';
-import InputMask from 'react-input-mask';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { normalizePhoneNumber } from '@/services/masks';
 
-const MaskedInput = forwardRef<HTMLInputElement, any>((props, ref) => (
-  <InputMask {...props} ref={ref}>
-    {(inputProps: any) => <Input {...inputProps} />}
-  </InputMask>
-));
+interface Cliente {
+  nome: string;
+  telefone: string;
+  endereco: string;
+}
 
-export default function ClienteModal({ open, onClose, onSubmit, cliente }: any) {
-  const [form, setForm] = useState({
-    nome: cliente?.nome || '',
-    telefone: cliente?.telefone || '',
-    endereco: cliente?.endereco || ''
+interface ClienteModalProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (form: Cliente) => void;
+  cliente?: Cliente;
+}
+
+export default function ClienteModal({ open, onClose, onSubmit, cliente }: ClienteModalProps) {
+  const [form, setForm] = useState<Cliente>({
+    nome: '',
+    telefone: '',
+    endereco: ''
   });
 
+  useEffect(() => {
+  if (open) {
+    setForm({
+      nome: cliente?.nome || '',
+      telefone: normalizePhoneNumber(cliente?.telefone) || '',
+      endereco: cliente?.endereco || ''
+    });
+  }
+}, [cliente, open]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+
+    const formattedValue =
+    e.target.name === 'telefone' ? normalizePhoneNumber(e.target.value) : e.target.value;
+    setForm({ ...form, [e.target.name]: formattedValue });
   };
 
   const handleSubmit = () => {
@@ -48,13 +68,15 @@ export default function ClienteModal({ open, onClose, onSubmit, cliente }: any) 
             onChange={handleChange}
             required
           />
-          <MaskedInput
-            mask="(99) 99999-9999"
+
+          <Input
             name="telefone"
             placeholder="Telefone"
             value={form.telefone}
             onChange={handleChange}
+            required
           />
+          
           <Input
             name="endereco"
             placeholder="Endereço"
