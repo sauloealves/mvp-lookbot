@@ -57,7 +57,7 @@ async function uploadToImgBB(fileBuffer) {
   formData.append('image', base64);
 
   const response = await axios.post(
-    'https://api.imgbb.com/1/upload?key=' + process.env.IMGBB_API_KEY,
+    process.env.IMG_BB_URL + '/upload?key=' + process.env.IMGBB_API_KEY,
     formData
   );
   return response.data.data.url;

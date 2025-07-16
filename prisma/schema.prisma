@@ -48,7 +48,7 @@ model Cliente {
 model Roupa {
   id                  String   @id @default(uuid())
   descricao_curta     String
-  cores_predominantes String[] // ARRAY no PostgreSQL
+  cores_predominantes String[] 
   tom_de_pele         String?
   estilo              String?
   url                 String?
