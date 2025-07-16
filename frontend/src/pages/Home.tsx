@@ -31,9 +31,9 @@ export default function Home() {
               Usuários
             </Button>
           )}
-          <Button onClick={() => navigate('/cadastrar-produto')} className="flex flex-col items-center justify-center p-6 h-36 text-lg">
+          <Button onClick={() => navigate('/roupas')} className="flex flex-col items-center justify-center p-6 h-36 text-lg">
             <PackagePlus size={48} className="mb-2" />
-            Cadastrar Produto
+            Cadastrar Roupa
           </Button>
           <Button onClick={() => navigate('/compras')} className="flex flex-col items-center justify-center p-6 h-36 text-lg">
             <ShoppingCart size={48} className="mb-2" />

@@ -49,14 +49,15 @@ model Roupa {
   id                  String   @id @default(uuid())
   descricao_curta     String
   cores_predominantes String[] // ARRAY no PostgreSQL
-  tom_de_pele         String
-  estilo              String
-  url                 String
+  tom_de_pele         String?
+  estilo              String?
+  url                 String?
   valor               Float
   ativo               Boolean  @default(true)
   loja_id             String
   loja                Loja     @relation(fields: [loja_id], references: [id])
   itens               CompraItem[]
+  imagens             ImagemRoupa[] 
 }
 
 model Compra {
@@ -79,4 +80,11 @@ model CompraItem {
   valor_total     Float
   compra          Compra   @relation(fields: [compra_id], references: [id])
   roupa           Roupa    @relation(fields: [roupa_id], references: [id])
+}
+
+model ImagemRoupa {
+  id       String  @id @default(uuid())
+  url      String
+  roupaId  String
+  roupa    Roupa   @relation(fields: [roupaId], references: [id], onDelete: Cascade)  
 }
