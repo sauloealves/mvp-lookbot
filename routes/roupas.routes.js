@@ -8,7 +8,7 @@ const router = express.Router();
 const upload = multer();
 
 router.get('/', autenticar, async (req, res) => {
-  const roupas = await prisma.roupa.findMany({ where: { loja_id: req.lojaId, ativo: true } });
+  const roupas = await prisma.roupa.findMany({ where: { loja_id: req.lojaId, ativo: true }, include: { imagens: true } });
   res.json(roupas);
 });
 
@@ -43,6 +43,33 @@ router.post('/', autenticar, upload.array('imagens'), async (req, res) => {
   }
 });
 
+router.put('/:id', autenticar, upload.array('imagens'), async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const { descricao_curta, cores_predominantes, tom_de_pele, estilo, valor } = req.body;
+    const coresArray = typeof cores_predominantes === 'string' ? cores_predominantes.split(',').map(c => c.trim()).filter(Boolean): [];
+    const imagens = await uploadImagesToImgbb(req.files);
+
+    const roupaAtualizada = await prisma.roupa.update({
+      where: { id },
+      data: {
+        descricao_curta,
+        cores_predominantes: coresArray,
+        tom_de_pele,
+        estilo,
+        valor: parseFloat(valor),
+        imagens: {
+          create: imagens.map(url => ({ url }))
+        }
+      }
+    });
+    res.json(roupaAtualizada);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ erro: 'Erro ao editar roupa' });
+  }
+});
 
 const uploadImagesToImgbb = async (files) => {
   const results = [];
@@ -59,5 +86,6 @@ const uploadImagesToImgbb = async (files) => {
   }
   return results;
 };
+
 
 export default router;
