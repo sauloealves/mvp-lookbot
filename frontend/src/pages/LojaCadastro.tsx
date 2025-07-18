@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import LogoPreview from "@/components/LogoPreview";
-import api from "@/services/api";
+import {api} from "@/services/api";
 import { validarSenha } from "@/lib/utils";
 
 export default function CadastroLoja() {  

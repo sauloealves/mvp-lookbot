@@ -87,5 +87,39 @@ const uploadImagesToImgbb = async (files) => {
   return results;
 };
 
+router.post('/ia/descricao', upload.single('image'), async (req, res) => {
+  try {
+    const imageUrls = await uploadImagesToImgbb([req.file]);
+    const imageUrl = imageUrls[0];
+
+    const prompt = `Descrição bem curta, maximo 10 palavras, objetiva e atrativa para cadastro em loja: ${imageUrl}`;
+
+    const iaResponse = await axios.post(
+      'https://api.openai.com/v1/chat/completions',
+      {
+        model: 'gpt-4-turbo',
+        messages: [
+          { role: 'user', content: [{ type: 'text', text: prompt }, { type: 'image_url', image_url: { url: imageUrl } }] }
+        ],
+        max_tokens: 100
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    const descricao = iaResponse.data.choices?.[0]?.message?.content?.trim();
+    res.json({ descricao });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ erro: 'Erro ao gerar descrição com IA' });
+  }
+});
+
+
 
 export default router;

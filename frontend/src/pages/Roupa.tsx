@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import RoupaCard from '@/components/RoupaCard';
 import RoupaModal from '@/components/RoupaModal';
-import api from '@/services/api';
+import {api} from '@/services/api';
 import { useLoading } from '@/contexts/LoadingContext';
 import Topbar from '@/components/Topbar';
 

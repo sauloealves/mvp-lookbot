@@ -3,6 +3,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
+import {getUrl} from '@/services/api';
+import { Loader2, Sparkles } from 'lucide-react'; // ícones extras
 
 interface Roupa {  
   id: string;
@@ -32,6 +34,7 @@ export default function RoupaModal({ open, onClose, onSubmit, roupaModal }: Roup
 
   const [files, setFiles] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
+  const [gerandoDescricao, setGerandoDescricao] = useState(false);
 
   useEffect(() => {
     setForm({
@@ -86,6 +89,37 @@ export default function RoupaModal({ open, onClose, onSubmit, roupaModal }: Roup
     setFiles(files.filter((_, i) => i !== index));
   };
 
+  const handleAutoDescribe = async () => {
+    if (!files.length) {
+      alert('Adicione ao menos uma imagem para gerar a descrição.');
+      return;
+    }
+    
+    setGerandoDescricao(true);
+    const formData = new FormData();
+    formData.append('image', files[0]);
+
+    try {
+      const url = getUrl('roupas/ia/descricao');
+      const res = await fetch(url, {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await res.json();
+      if (data.descricao) {
+        setForm(prev => ({ ...prev, descricao_curta: data.descricao }));
+      } else {
+        alert('Não foi possível gerar uma descrição.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Erro ao gerar descrição com IA.');
+    }finally {
+      setGerandoDescricao(false);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
@@ -94,7 +128,28 @@ export default function RoupaModal({ open, onClose, onSubmit, roupaModal }: Roup
         </DialogHeader>
         <div className="space-y-2">
           <div className="space-y-4">
-          <Input name="descricao_curta" placeholder="Descrição" value={form.descricao_curta} onChange={handleChange} />
+          <div className="flex gap-2">
+            <Input
+              name="descricao_curta"
+              placeholder="Descrição"
+              value={form.descricao_curta}
+              onChange={handleChange}
+              className="flex-1"
+            />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleAutoDescribe}
+              disabled={gerandoDescricao}
+              className="p-2"
+            >
+              {gerandoDescricao ? (
+                <Loader2 className="animate-spin w-4 h-4" />
+              ) : (
+                <Sparkles className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
           <Input name="valor" placeholder="Valor" type="number" value={form.valor} onChange={handleChange} />
           <Input name="cores_predominantes" placeholder="Cores (separadas por vírgula)" value={form.cores_predominantes} onChange={handleChange} />
           <Input name="tom_de_pele" placeholder="Tom de pele sugerido" value={form.tom_de_pele} onChange={handleChange} />

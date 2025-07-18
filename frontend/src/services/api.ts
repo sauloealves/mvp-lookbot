@@ -30,4 +30,6 @@ export const setupInterceptors = (setLoading: (loading: boolean) => void) => {
   );
 };
 
-export default api;
+const getUrl = (path: string) => `${baseUrl}/${path}`;
+
+export { api, getUrl };

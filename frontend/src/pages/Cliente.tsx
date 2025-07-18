@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ClienteModal from '@/components/ClienteModal';
 import { Button } from '@/components/ui/button';
-import api from '@/services/api';
+import {api} from '@/services/api';
 import Topbar from '@/components/Topbar';
 import ClienteCard from '@/components/ClienteCard';
 import { Input } from '@/components/ui/input';
