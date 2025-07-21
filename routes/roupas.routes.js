@@ -8,7 +8,23 @@ const router = express.Router();
 const upload = multer();
 
 router.get('/', autenticar, async (req, res) => {
-  const roupas = await prisma.roupa.findMany({ where: { loja_id: req.lojaId, ativo: true }, include: { imagens: true } });
+  
+  const { search } = req.query;
+
+  const roupas = await prisma.roupa.findMany({
+    where: {
+      loja_id: req.lojaId,
+      ativo: true,
+      descricao_curta: {
+        contains: search || '',
+        mode: 'insensitive'
+      }
+    },
+    include: {
+      imagens: true
+    },
+    orderBy: { descricao_curta: 'asc' }
+  });
   res.json(roupas);
 });
 
@@ -120,6 +136,30 @@ router.post('/ia/descricao', upload.single('image'), async (req, res) => {
   }
 });
 
+router.delete('/:id', autenticar, async (req, res) => {
+  const { id } = req.params;
 
+  try {
+    const roupa = await prisma.roupa.updateMany({
+      where: {
+        id,
+        loja_id: req.lojaId,
+        ativo: true
+      },
+      data: {
+        ativo: false
+      }
+    });
+
+    if (roupa.count === 0) {
+      return res.status(404).json({ erro: 'Roupa não encontrada ou já desativada' });
+    }
+
+    res.json({ sucesso: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ erro: 'Erro ao excluir roupa' });
+  }
+});
 
 export default router;

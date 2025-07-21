@@ -10,6 +10,7 @@ import LojaCadastro from '@/pages/LojaCadastro';
 import Clientes from './pages/Cliente';
 import ProtectedRoute from './components/ProtectedRoute';
 import Roupa from './pages/Roupa';
+import Venda from './pages/Venda';
 // Importar outras páginas conforme forem criadas
 
 export default function App() {
@@ -36,7 +37,11 @@ export default function App() {
           <Route 
               path="/roupas" 
               element={<ProtectedRoute><Roupa /></ProtectedRoute>} />
-              
+
+              <Route 
+              path="/vendas" 
+              element={<ProtectedRoute><Venda /></ProtectedRoute>} />
+
         </Routes>
 
       </BrowserRouter>
