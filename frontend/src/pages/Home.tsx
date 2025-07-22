@@ -43,6 +43,10 @@ export default function Home() {
             <UserCircle size={48} className="mb-2" />
             Clientes
           </Button>
+          <Button onClick={() => navigate('/vendascliente')} className="flex flex-col items-center justify-center p-6 h-36 text-lg">
+            <UserCircle size={48} className="mb-2" />
+            Vendas por Cliente
+          </Button>
         </div>
       </div>
     </div>

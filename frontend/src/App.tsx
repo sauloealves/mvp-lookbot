@@ -11,7 +11,7 @@ import Clientes from './pages/Cliente';
 import ProtectedRoute from './components/ProtectedRoute';
 import Roupa from './pages/Roupa';
 import Venda from './pages/Venda';
-// Importar outras páginas conforme forem criadas
+import VendasPorCliente from './pages/VendasPorCliente';
 
 export default function App() {
   const [isLoading, setLoading] = useState(false);
@@ -41,6 +41,10 @@ export default function App() {
               <Route 
               path="/vendas" 
               element={<ProtectedRoute><Venda /></ProtectedRoute>} />
+
+              <Route 
+              path="/vendascliente" 
+              element={<ProtectedRoute><VendasPorCliente /></ProtectedRoute>} />
 
         </Routes>
 

@@ -5,6 +5,7 @@ import clientesRoutes from './routes/clientes.routes.js';
 import lojasRoutes from './routes/lojas.routes.js';
 import vendasRoutes from './routes/vendas.routes.js';
 
+
 dotenv.config();
 
 import express from 'express';

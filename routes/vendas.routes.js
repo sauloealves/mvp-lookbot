@@ -56,4 +56,21 @@ router.get('/', autenticar, async (req, res) => {
   res.json(vendas);
 });
 
+router.get('/cliente/:id', autenticar, async (req, res) => {
+  const { id } = req.params;
+  const vendas = await prisma.venda.findMany({
+    where: { loja_id: req.lojaId, cliente_id: id },
+    include: {
+      cliente: true,
+      itens: {
+        include: {
+          roupa: { include: { imagens: true } }
+        }
+      }
+    },
+    orderBy: { data: 'desc' }
+  });
+  res.json(vendas);
+});
+
 export default router;
