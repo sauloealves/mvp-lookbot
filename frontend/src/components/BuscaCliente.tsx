@@ -14,7 +14,7 @@ export default function BuscarCliente({ onSelecionar }: { onSelecionar: (cliente
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (termo.length > 1) {
-        fetch( getUrl(`/api/clientes?search=${encodeURIComponent(termo)}`))
+        fetch(getUrl(`clientes?search=${encodeURIComponent(termo)}`), { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
           .then(res => res.json())
           .then(data => setClientes(data));
       } else {

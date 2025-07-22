@@ -4,4 +4,5 @@ export interface ItemVenda {
   roupa: Roupa;
   quantidade: number;
   valor: number;
+  tipo: 'venda' | 'consignado'; 
 }

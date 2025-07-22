@@ -22,7 +22,7 @@ model Loja {
   usuarios  Usuario[]
   roupas    Roupa[]
   clientes  Cliente[]
-  compras   Compra[]
+  vendas    Venda[]
 }
 
 model Usuario {
@@ -42,7 +42,7 @@ model Cliente {
   endereco  String
   loja_id   String
   loja      Loja     @relation(fields: [loja_id], references: [id])
-  compras   Compra[]
+  vendas    Venda[]
 }
 
 model Roupa {
@@ -56,30 +56,30 @@ model Roupa {
   ativo               Boolean  @default(true)
   loja_id             String
   loja                Loja     @relation(fields: [loja_id], references: [id])
-  itens               CompraItem[]
+  itens               VendaItem[]
   imagens             ImagemRoupa[] 
 }
 
-model Compra {
+model Venda {
   id         String       @id @default(uuid())
   data       DateTime     @default(now())
-  total      Float
   loja_id    String
   cliente_id String
   loja       Loja         @relation(fields: [loja_id], references: [id])
   cliente    Cliente      @relation(fields: [cliente_id], references: [id])
-  itens      CompraItem[]
+  itens      VendaItem[]
 }
 
-model CompraItem {
-  id              String   @id @default(uuid())
-  compra_id       String
-  roupa_id        String
-  quantidade      Int
-  valor_unitario  Float
-  valor_total     Float
-  compra          Compra   @relation(fields: [compra_id], references: [id])
-  roupa           Roupa    @relation(fields: [roupa_id], references: [id])
+model VendaItem {
+  id                String   @id @default(uuid())
+  venda_id          String
+  roupa_id          String
+  quantidade        Int
+  valor_unitario    Float
+  desconto_aplicado Float
+  tipo              Int
+  venda             Venda   @relation(fields: [venda_id], references: [id])
+  roupa             Roupa    @relation(fields: [roupa_id], references: [id])
 }
 
 model ImagemRoupa {

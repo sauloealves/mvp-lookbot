@@ -6,23 +6,24 @@ const router = express.Router();
 
 router.post('/', autenticar, async (req, res) => {
   try {
-    const { cliente_id, tipo, data, itens } = req.body;
+    const { cliente_id, data, itens } = req.body;
 
-    if (!cliente_id || !tipo || !data || !Array.isArray(itens) || itens.length === 0) {
+    if (!cliente_id || !data || !Array.isArray(itens) || itens.length === 0) {
       return res.status(400).json({ erro: 'Dados incompletos' });
     }
 
     const venda = await prisma.venda.create({
       data: {
         loja_id: req.lojaId,
-        cliente_id,
-        tipo, // 'venda' ou 'consignado'
+        cliente_id,        
         data: new Date(data),
         itens: {
           create: itens.map(i => ({
             roupa_id: i.roupa_id,
             quantidade: i.quantidade,
             valor_unitario: i.valor_unitario,
+            desconto_aplicado: i.desconto_aplicado || 0,
+            tipo: i.tipo == 'venda' ? 1 : 0
           }))
         }
       },

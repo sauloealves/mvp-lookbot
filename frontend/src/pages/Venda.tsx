@@ -8,6 +8,8 @@ import { Calendar } from 'lucide-react';
 import Topbar from '@/components/Topbar';
 import type { ItemVenda } from '@/types/itemVendaType';
 import BuscarProduto from '@/components/BuscaProduto';
+import BuscarCliente from '@/components/BuscaCliente';
+import { getUrl } from '@/services/api';
 
 
 export default function NovaVenda() {
@@ -20,11 +22,10 @@ export default function NovaVenda() {
   const [tipo, setTipo] = useState<'venda' | 'consignado'>('venda');
   const [data, setData] = useState<Date | undefined>(new Date());
 
-  // Função para adicionar item na venda
   const adicionarItem = (roupa: Roupa) => {
     const existe = itens.find(i => i.roupa.id === roupa.id);
     if (existe) return;
-    setItens([...itens, { roupa, quantidade: 1, valor: roupa.valor }]);
+    setItens([...itens, { roupa, quantidade: 1, valor: roupa.valor, tipo: tipo }]);
   };
 
   const atualizarItem = (index: number, campo: 'quantidade' | 'valor', valor: number) => {
@@ -47,33 +48,60 @@ export default function NovaVenda() {
       return;
     }
 
-    alert('Venda cadastrada com sucesso!');
+    const venda = {
+      cliente_id: clienteSelecionado.id,
+      loja_id: localStorage.getItem('lojaId'),
+      data: data.toISOString(),
+      itens: itens.map(i => ({
+        roupa_id: i.roupa.id,
+        quantidade: i.quantidade,
+        valor_unitario: i.valor,
+        tipo: i.tipo,
+        desconto_aplicado: 0
+      }))
+    };
+
+    fetch(getUrl('vendas'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(venda)
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          alert(data.error);
+        } else {
+          alert('Venda salva com sucesso!');
+          setItens([]);
+          setClienteSelecionado(null);
+          setData(new Date());
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Erro ao salvar venda');
+      });
+  };
+
+  const handleTipoChange = (index: number, novoTipo: string) => {
+    const novosItens = [...itens];
+    novosItens[index].tipo = novoTipo;
+    setItens(novosItens);
   };
 
   return (
     <div className="min-h-screen bg-gray-100">
-        <Topbar />
+      <Topbar />
       <div className="p-4 max-w-4xl mx-auto space-y-4">
         <h2 className="text-2xl font-semibold">Nova Venda / Consignado</h2>
 
         <div className="flex gap-4">
           <div className="flex-1">
-            <Input
-              placeholder="Buscar cliente"
-              value={clienteFiltro}
-              onChange={(e) => setClienteFiltro(e.target.value)}
-            />
-            <div className="bg-white border max-h-40 overflow-y-auto">
-              {clientesFiltrados.map((cliente) => (
-                <div
-                  key={cliente.id}
-                  className="p-2 cursor-pointer hover:bg-gray-100"
-                  onClick={() => setClienteSelecionado(cliente)}
-                >
-                  {cliente.nome}
-                </div>
-              ))}
-            </div>
+            <BuscarCliente onSelecionar={setClienteSelecionado} />
+
             {clienteSelecionado && <p className="text-sm text-green-600">Cliente: {clienteSelecionado.nome}</p>}
           </div>
 
@@ -97,19 +125,26 @@ export default function NovaVenda() {
         </div>
 
         <div>
-          <table className="w-full text-sm border mt-4">
+          <table className="w-full text-sm border mt-4 table-auto border-separate border-spacing-y-2">
             <thead>
               <tr className="bg-gray-100">
                 <th className="p-2 text-left">Produto</th>
                 <th>Qtd</th>
                 <th>Valor</th>
                 <th>Total</th>
+                <th>Tipo</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               {itens.map((item, index) => (
-                <tr key={index} className="border-t">
+                <tr key={index} className={`transition-all ${
+                    item.tipo === 'consignado'
+                      ? 'bg-blue-100'
+                      : item.tipo === 'venda'
+                      ? 'bg-green-100'
+                      : ''
+                  } border-b`}>
                   <td className="p-2">{item.roupa.descricao_curta}</td>
                   <td className="text-center">
                     <Input
@@ -128,6 +163,16 @@ export default function NovaVenda() {
                     />
                   </td>
                   <td className="text-center">R$ {(item.quantidade * item.valor).toFixed(2)}</td>
+                  <td>
+                    <select
+                      value={item.tipo}
+                      onChange={(e) => handleTipoChange(index, e.target.value)}
+                      className="border rounded px-1 py-0.5"
+                    >
+                      <option value="venda">Venda</option>
+                      <option value="consignado">Consignado</option>
+                    </select>
+                  </td>
                   <td className="text-center">
                     <button
                       className="text-red-500"
