@@ -1,17 +1,11 @@
 import { useState, useEffect } from 'react';
 import ClienteModal from '@/components/ClienteModal';
 import { Button } from '@/components/ui/button';
-import api from '@/services/api';
+import {api} from '@/services/api';
 import Topbar from '@/components/Topbar';
 import ClienteCard from '@/components/ClienteCard';
 import { Input } from '@/components/ui/input';
-
-interface Cliente {
-  id: string;
-  nome: string;
-  telefone: string;
-  endereco: string;
-}
+import type { Cliente } from '@/types/clienteType';
 
 export default function Clientes() {
   const [clientes, setClientes] = useState<Cliente[]>([]);

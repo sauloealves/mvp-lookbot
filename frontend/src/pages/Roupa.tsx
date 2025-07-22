@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import RoupaCard from '@/components/RoupaCard';
 import RoupaModal from '@/components/RoupaModal';
-import api from '@/services/api';
+import {api} from '@/services/api';
 import { useLoading } from '@/contexts/LoadingContext';
 import Topbar from '@/components/Topbar';
 
@@ -39,13 +39,37 @@ export default function Roupas() {
     setShowModal(true);
   };
 
-  const salvarRoupa = async (dados: any) => {
+  const salvarRoupa = async (dados: any, files: File[]) => {
+    
+    const formData = new FormData();
+    formData.append('descricao_curta', dados.descricao_curta);
+    formData.append('valor', dados.valor.toString());
+    formData.append('tom_de_pele', dados.tom_de_pele);
+    formData.append('estilo', dados.estilo);
+    formData.append('cores_predominantes', dados.cores_predominantes.join(','));
+
+    files.forEach(file => {
+      formData.append('imagens', file);
+    });
+
     if (roupaEditando) {
-      await api.put(`/roupas/${roupaEditando.id}`, dados);
+      await api.put(`/roupas/${roupaEditando.id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      carregarRoupas();
+      setRoupaEditando(null);
     } else {
-      await api.post('/roupas', dados);
+      await api.post('/roupas', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
     }
+
     carregarRoupas();
+
   };
 
   const excluirRoupa = async (id: string) => {
@@ -93,7 +117,7 @@ export default function Roupas() {
             open={showModal}
             onClose={() => setShowModal(false)}
             onSubmit={salvarRoupa}
-            roupa={roupaEditando}
+            roupaModal={roupaEditando}
         />
         </div>
     </div>

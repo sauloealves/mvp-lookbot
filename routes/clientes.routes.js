@@ -13,7 +13,16 @@ router.post('/', autenticar, async (req, res) => {
 });
 
 router.get('/', autenticar, async (req, res) => {
-  const clientes = await prisma.cliente.findMany({ where: { loja_id: req.lojaId } });
+  const { search } = req.query;
+  const clientes = await prisma.cliente.findMany({
+    where: {
+      loja_id: req.lojaId,
+      nome: {
+        contains: search,
+        mode: 'insensitive'
+      }
+    }
+  });
   res.json(clientes);
 });
 

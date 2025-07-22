@@ -35,13 +35,17 @@ export default function Home() {
             <PackagePlus size={48} className="mb-2" />
             Cadastrar Roupa
           </Button>
-          <Button onClick={() => navigate('/compras')} className="flex flex-col items-center justify-center p-6 h-36 text-lg">
+          <Button onClick={() => navigate('/vendas')} className="flex flex-col items-center justify-center p-6 h-36 text-lg">
             <ShoppingCart size={48} className="mb-2" />
-            Visualizar Compras
+            Realizar Venda
           </Button>
           <Button onClick={() => navigate('/clientes')} className="flex flex-col items-center justify-center p-6 h-36 text-lg">
             <UserCircle size={48} className="mb-2" />
             Clientes
+          </Button>
+          <Button onClick={() => navigate('/vendascliente')} className="flex flex-col items-center justify-center p-6 h-36 text-lg">
+            <UserCircle size={48} className="mb-2" />
+            Vendas por Cliente
           </Button>
         </div>
       </div>
