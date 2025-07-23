@@ -20,8 +20,9 @@ export default function Login() {
       localStorage.setItem('loja_nome', data.loja_nome);
 
       navigate('/');
-    } catch (err) {
-      alert(`${err.response.data.erro}`);
+    } catch (error) {
+      alert('Erro ao fazer login. Verifique suas credenciais e tente novamente.');
+      console.error('Login error:', error);
     }
   };
 

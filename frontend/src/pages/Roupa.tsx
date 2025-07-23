@@ -5,7 +5,7 @@ import RoupaCard from '@/components/RoupaCard';
 import RoupaModal from '@/components/RoupaModal';
 import {api} from '@/services/api';
 import { useLoading } from '@/contexts/LoadingContext';
-import Topbar from '@/components/Topbar';
+import Topbar from '@/components/TopBar';
 
 export default function Roupas() {
   const { setLoading } = useLoading();

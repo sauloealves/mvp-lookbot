@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import {getUrl} from '@/services/api';
+import type { Cliente } from '@/types/clienteType';
 
-interface Cliente {
-  id: string;
-  nome: string;
-  telefone: string;
-}
+
 
 export default function BuscarCliente({ onSelecionar }: { onSelecionar: (cliente: Cliente) => void }) {
   const [termo, setTermo] = useState('');

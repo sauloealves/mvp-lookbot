@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import Topbar from '@/components/Topbar';
+import Topbar from '@/components/TopBar';
 import BuscarCliente from '@/components/BuscaCliente';
 import type { Cliente, Venda } from '@/types';
 import axios from 'axios';

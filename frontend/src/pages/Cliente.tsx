@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ClienteModal from '@/components/ClienteModal';
 import { Button } from '@/components/ui/button';
 import {api} from '@/services/api';
-import Topbar from '@/components/Topbar';
+import Topbar from '@/components/TopBar';
 import ClienteCard from '@/components/ClienteCard';
 import { Input } from '@/components/ui/input';
 import type { Cliente } from '@/types/clienteType';
@@ -78,6 +78,12 @@ export default function Clientes() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {clientesPaginados.map(cliente => (
             <ClienteCard
+              onDelete={ async () => {
+                if (window.confirm(`Deseja realmente excluir o cliente ${cliente.nome}?`)) {
+                  await api.delete(`/clientes/${cliente.id}`);
+                  fetchClientes();
+                }
+              }}
               key={cliente.id}
               cliente={cliente}
               onEdit={() => handleEditarCliente(cliente)}

@@ -20,7 +20,7 @@ interface RoupaModalProps {
   open: boolean;
   onClose: () => void;
   onSubmit: (form: Roupa, files: File[]) => void;
-  roupa?: Roupa;
+  roupaModal?: Roupa;
 }
 
 export default function RoupaModal({ open, onClose, onSubmit, roupaModal }: RoupaModalProps) {
@@ -72,7 +72,7 @@ export default function RoupaModal({ open, onClose, onSubmit, roupaModal }: Roup
       return;
     }
     const payload: Roupa = {
-      id: roupaModal?.id,
+      id: roupaModal?.id || '',
       imagens: files.map(file => ({ url: URL.createObjectURL(file) })),
       descricao_curta: form.descricao_curta.trim(),
       valor: Number(form.valor),
