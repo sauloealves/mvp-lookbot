@@ -5,4 +5,6 @@ export interface ItemVenda {
   quantidade: number;
   valor: number;
   tipo: 'venda' | 'consignado'; 
+  desconto?: number; 
+  valor_unitario: number;
 }

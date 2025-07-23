@@ -4,20 +4,18 @@ import { Button } from '@/components/ui/button';
 import type { Roupa } from '@/types';
 import type { Cliente } from '@/types';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
-import { Calendar } from 'lucide-react';
-import Topbar from '@/components/Topbar';
+import Topbar from '@/components/TopBar';
 import type { ItemVenda } from '@/types/itemVendaType';
 import BuscarProduto from '@/components/BuscaProduto';
 import BuscarCliente from '@/components/BuscaCliente';
 import { getUrl } from '@/services/api';
 
-
 export default function NovaVenda() {
-  const [clienteFiltro, setClienteFiltro] = useState('');
-  const [produtoFiltro, setProdutoFiltro] = useState('');
+  // const [clienteFiltro, setClienteFiltro] = useState('');
+  // const [produtoFiltro, setProdutoFiltro] = useState('');
   const [clienteSelecionado, setClienteSelecionado] = useState<Cliente | null>(null);
-  const [produtosFiltrados, setProdutosFiltrados] = useState<Roupa[]>([]);
-  const [clientesFiltrados, setClientesFiltrados] = useState<Cliente[]>([]);
+  // const [produtosFiltrados, setProdutosFiltrados] = useState<Roupa[]>([]);
+  // const [clientesFiltrados, setClientesFiltrados] = useState<Cliente[]>([]);
   const [itens, setItens] = useState<ItemVenda[]>([]);
   const [tipo, setTipo] = useState<'venda' | 'consignado'>('venda');
   const [data, setData] = useState<Date | undefined>(new Date());
@@ -25,7 +23,7 @@ export default function NovaVenda() {
   const adicionarItem = (roupa: Roupa) => {
     const existe = itens.find(i => i.roupa.id === roupa.id);
     if (existe) return;
-    setItens([...itens, { roupa, quantidade: 1, valor: roupa.valor, tipo: tipo }]);
+    setItens([...itens, { roupa, quantidade: 1, valor: roupa.valor, tipo: tipo, valor_unitario: roupa.valor }]);
   };
 
   const atualizarItem = (index: number, campo: 'quantidade' | 'valor', valor: number) => {
@@ -88,7 +86,7 @@ export default function NovaVenda() {
 
   const handleTipoChange = (index: number, novoTipo: string) => {
     const novosItens = [...itens];
-    novosItens[index].tipo = novoTipo;
+    novosItens[index].tipo = novoTipo as 'venda' | 'consignado';
     setItens(novosItens);
   };
 
@@ -99,10 +97,11 @@ export default function NovaVenda() {
         <h2 className="text-2xl font-semibold">Nova Venda / Consignado</h2>
 
         <div className="flex gap-4">
-          <div className="flex-1">
+          <div className="flex-[2]">
             <BuscarCliente onSelecionar={setClienteSelecionado} />
-
-            {clienteSelecionado && <p className="text-sm text-green-600">Cliente: {clienteSelecionado.nome}</p>}
+            {clienteSelecionado && (
+              <p className="text-sm text-green-600">Cliente: {clienteSelecionado.nome}</p>
+            )}
           </div>
 
           <div className="w-40">
@@ -117,7 +116,14 @@ export default function NovaVenda() {
             </Select>
           </div>
 
-          <Calendar mode="single" selected={data} onSelect={setData} className="border rounded-md" />
+          <div className="w-36">
+            <Input
+              type="date"
+              className="border rounded-md"
+              value={data ? data.toISOString().substring(0, 10) : ''}
+              onChange={e => setData(e.target.value ? new Date(e.target.value) : undefined)}
+            />
+          </div>
         </div>
 
         <div>

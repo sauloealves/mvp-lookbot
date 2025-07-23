@@ -1,16 +1,12 @@
 import { getUrl } from '@/services/api';
+import type { Roupa } from '@/types/roupaType';
 import { useEffect, useState } from 'react';
 
-interface Produto {
-  id: string;
-  descricao_curta: string;
-  imagens?: { url: string }[];
-  valor: number;
-}
 
-export default function BuscarProduto({ onSelecionar }: { onSelecionar: (produto: Produto) => void }) {
+
+export default function BuscarProduto({ onSelecionar }: { onSelecionar: (produto: Roupa) => void }) {
   const [termo, setTermo] = useState('');
-  const [produtos, setProdutos] = useState<Produto[]>([]);
+  const [produtos, setProdutos] = useState<Roupa[]>([]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
