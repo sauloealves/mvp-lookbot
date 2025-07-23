@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import Topbar from '@/components/TopBar';
 import BuscarCliente from '@/components/BuscaCliente';
 import type { Cliente, Venda } from '@/types';
-import axios from 'axios';
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { getUrl } from '@/services/api';
 
@@ -14,15 +14,17 @@ export default function VendasPorCliente() {
 
   const buscarVendas = async () => {
     if (!cliente) return;
-    const { data } = await axios.get(getUrl(`vendas/cliente/${cliente.id}`), {
+    const response = await fetch(getUrl(`vendas/cliente/${cliente.id}`), {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     });
+    const data = await response.json();
     setVendas(data);
   };
 
   const excluirVenda = async (id: string) => {
     if (!confirm('Deseja excluir esta venda?')) return;
-    await axios.delete(getUrl(`vendas/${id}`), {
+    await fetch(getUrl(`vendas/${id}`), {
+      method: 'DELETE',
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     });
     buscarVendas();
