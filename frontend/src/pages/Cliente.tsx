@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ClienteModal from '@/components/ClienteModal';
 import { Button } from '@/components/ui/button';
-import {api} from '@/services/api';
+import {getUrl} from '@/services/api';
 import Topbar from '@/components/TopBar';
 import ClienteCard from '@/components/ClienteCard';
 import { Input } from '@/components/ui/input';
@@ -25,7 +25,12 @@ export default function Clientes() {
   const clientesPaginados = clientesFiltrados.slice((paginaAtual - 1) * porPagina, paginaAtual * porPagina);
 
   const fetchClientes = async () => {
-    const { data } = await api.get('/clientes');
+    const response = await fetch(getUrl('clientes'), {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    const data = await response.json();
     setClientes(data);
   };
 
@@ -55,9 +60,23 @@ export default function Clientes() {
 
   const handleSalvarCliente = async (dados: Partial<Cliente>) => {
     if (clienteSelecionado) {
-      await api.put(`/clientes/${clienteSelecionado.id}`, dados);
+      await fetch(getUrl(`clientes/${clienteSelecionado.id}`), {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+      });
     } else {
-      await api.post('/clientes', dados);
+      await fetch(getUrl('clientes'), {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+      });
     }
     fetchClientes();
   };
@@ -80,7 +99,12 @@ export default function Clientes() {
             <ClienteCard
               onDelete={ async () => {
                 if (window.confirm(`Deseja realmente excluir o cliente ${cliente.nome}?`)) {
-                  await api.delete(`/clientes/${cliente.id}`);
+                  await fetch(getUrl(`clientes/${cliente.id}`), {
+                    method: 'DELETE',
+                    headers: {
+                      'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                  });
                   fetchClientes();
                 }
               }}

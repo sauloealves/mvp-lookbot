@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {api} from '../services/api';
+import {getUrl} from '../services/api';
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
@@ -13,8 +13,17 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const { data } = await api.post('/auth/login', { email, senha });
-      
+      const response = await fetch(getUrl('auth/login'), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, senha })
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Erro ao fazer login');
+      }
       localStorage.setItem('token', data.token);
       localStorage.setItem('loja_logo', data.loja_logo);
       localStorage.setItem('loja_nome', data.loja_nome);

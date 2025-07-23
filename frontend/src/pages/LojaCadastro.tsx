@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import LogoPreview from "@/components/LogoPreview";
-import {api} from "@/services/api";
+import {getUrl} from "@/services/api";
 import { validarSenha } from "@/lib/utils";
 
 export default function CadastroLoja() {  
@@ -29,7 +29,13 @@ export default function CadastroLoja() {
     if (!validarSenha(senha)) 
       return alert('Senha inválida. Deve ter pelo menos 6 caracteres, 1 letra maiúscula, 1 número e 1 caractere especial.');
 
-    await api.post('/lojas', form);
+    await fetch(getUrl('/lojas'), {
+      method: 'POST',
+      body: form,
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+    });
     alert('Loja cadastrada com sucesso!');
   };
 

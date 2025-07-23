@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { setupInterceptors } from '@/services/api';
 import { LoadingProvider } from '@/contexts/LoadingProvider';
 import Loader from '@/components/Loader';
 
@@ -16,10 +15,6 @@ import VendasPorCliente from './pages/VendasPorCliente';
 export default function App() {
   const [isLoading, setLoading] = useState(false);
 
-  // Configura os interceptadores apenas uma vez
-  useEffect(() => {
-    setupInterceptors(setLoading);
-  }, []);
 
   return (
     <LoadingProvider value={{ isLoading, setLoading }}>

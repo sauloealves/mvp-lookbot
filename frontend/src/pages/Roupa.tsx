@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import RoupaCard from '@/components/RoupaCard';
 import RoupaModal from '@/components/RoupaModal';
-import {api} from '@/services/api';
+import {getUrl} from '@/services/api';
 import { useLoading } from '@/contexts/LoadingContext';
 import Topbar from '@/components/TopBar';
 
@@ -25,8 +25,13 @@ export default function Roupas() {
 
   const carregarRoupas = async () => {
     setLoading(true);
-    const res = await api.get('/roupas');
-    setRoupas(res.data);
+    const res = await fetch(getUrl('roupas'), {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    });
+    const data = await res.json();
+    setRoupas(data);
     setLoading(false);
   };
 
@@ -53,17 +58,21 @@ export default function Roupas() {
     });
 
     if (roupaEditando) {
-      await api.put(`/roupas/${roupaEditando.id}`, formData, {
+      await fetch(getUrl(`roupas/${roupaEditando.id}`), {
+        method: 'PUT',
+        body: formData,
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
       });
       carregarRoupas();
       setRoupaEditando(null);
     } else {
-      await api.post('/roupas', formData, {
+      await fetch(getUrl('roupas'), {
+        method: 'POST',
+        body: formData,
         headers: {
-          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
       });
     }
@@ -74,7 +83,12 @@ export default function Roupas() {
 
   const excluirRoupa = async (id: string) => {
     if (confirm('Deseja realmente excluir esta roupa?')) {
-      await api.delete(`/roupas/${id}`);
+      await fetch(getUrl(`roupas/${id}`), {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
       carregarRoupas();
     }
   };
