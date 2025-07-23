@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LoadingProvider } from '@/contexts/LoadingProvider';
 import Loader from '@/components/Loader';
